@@ -30,7 +30,7 @@ spec:
         supplementalGroups:
           - 1000
       imagePullSecrets:
-        - name: regcred
+        - name: regcred2
       containers:
         - name: {{ .Chart.Name }}
           env:
