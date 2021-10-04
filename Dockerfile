@@ -6,6 +6,7 @@ RUN apt install curl wget -y
 RUN addgroup --gid 1000 non-root && \
     adduser --gid 1000 --uid 1000 non-root --gecos GECOS --no-create-home --disabled-password
 
+
 RUN echo "test">index.html
 
 EXPOSE 5000
