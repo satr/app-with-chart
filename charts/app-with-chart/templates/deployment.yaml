@@ -29,6 +29,8 @@ spec:
         fsGroup: 1000
         supplementalGroups:
           - 1000
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: {{ .Chart.Name }}
           env:
