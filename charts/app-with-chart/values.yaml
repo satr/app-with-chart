@@ -10,3 +10,6 @@ image:
 service:
   type: ClusterIP
   internalPort: 5000
+
+env:
+  logLevel: INFO
