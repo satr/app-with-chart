@@ -1,0 +1,26 @@
+name: app-with-chart
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build-push
+    env:
+      IMAGE: app-with-chart
+      ACR: ghcr.io/satr
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Generate build ID
+        id: prep
+        run: |
+          branch=${GITHUB_REF##*/}
+          sha=${GITHUB_SHA::8}
+          ts=$(date +%s)
+          echo "::set-output name=BUILD_ID::${branch}-${sha}-${ts}"
+      - run: |
+          docker build . -t ${{ env.ACR }}/${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }} -t ${{ env.ACR }}/${{ env.IMAGE }}:main-latest
+      - run: |
+          docker push ${{ env.ACR }}/${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
+          docker push ${{ env.ACR }}/${{ env.IMAGE }}:main-latest

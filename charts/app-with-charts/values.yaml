@@ -1,0 +1,12 @@
+# Default values for app.
+
+clusterFQDN: xx
+
+image:
+  repository: xx
+  tag: xx
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  internalPort: 5000

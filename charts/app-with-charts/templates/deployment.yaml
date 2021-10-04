@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Chart.Name }}"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: "{{ .Chart.Name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{ .Chart.Name }}"
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.Name }}"
+        release: {{ .Release.Name }}
+    spec:
+      serviceAccount: "{{ .Chart.Name }}"
+      automountServiceAccountToken: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        supplementalGroups:
+          - 1000
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            - name: LOG_LEVEL
+              value: DEBUG
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.internalPort }}
+              protocol: TCP
+{{/*          resources:*/}}
+{{/*          {{- toYaml .Values.resources | nindent 12 }}*/}}
+          securityContext:
+            privileged: false
+            readOnlyRootFilesystem: false
+            allowPrivilegeEscalation: false
