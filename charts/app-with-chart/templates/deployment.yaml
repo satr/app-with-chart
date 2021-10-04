@@ -48,3 +48,10 @@ spec:
             privileged: false
             readOnlyRootFilesystem: false
             allowPrivilegeEscalation: false
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 80Mi
