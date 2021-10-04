@@ -10,6 +10,7 @@ RUN addgroup --gid 1000 non-root && \
 RUN echo "test">index.html
 
 EXPOSE 5000
+
 USER 1000
 
 ENTRYPOINT python -m http.server 5000
