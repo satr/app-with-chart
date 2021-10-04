@@ -11,5 +11,10 @@ service:
   type: ClusterIP
   internalPort: 5000
 
-env:
-  logLevel: INFO
+resources:
+  limits:
+    cpu: 200m
+    memory: 120Mi
+  requests:
+    cpu: 50m
+    memory: 100Mi
